@@ -6,6 +6,8 @@ const api = axios.create({ baseURL: "/api" });
 api.interceptors.request.use((config) => {
   const token = Cookies.get("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  // Bypass ngrok browser warning page for API requests
+  config.headers["ngrok-skip-browser-warning"] = "true";
   return config;
 });
 
