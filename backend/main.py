@@ -19,21 +19,24 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title=settings.APP_NAME, version="1.0.0")
 
 import os
+import re
 
+# Exact origins always allowed
 ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
 ]
-# Add Vercel frontend URL from environment variable if set
-_frontend_url = os.environ.get("FRONTEND_URL", "")
+
+# Additional origin from env (e.g. https://cybershield.vercel.app)
+_frontend_url = os.environ.get("FRONTEND_URL", "").rstrip("/")
 if _frontend_url:
     ALLOWED_ORIGINS.append(_frontend_url)
-    # Also allow with/without trailing slash
-    ALLOWED_ORIGINS.append(_frontend_url.rstrip("/"))
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    # Regex covers ALL *.vercel.app preview URLs + trycloudflare.com
+    allow_origin_regex=r"https://.*\.(vercel\.app|trycloudflare\.com)$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
