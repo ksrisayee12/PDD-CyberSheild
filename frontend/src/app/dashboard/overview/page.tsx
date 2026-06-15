@@ -43,8 +43,8 @@ export default function OverviewPage() {
   const load = async () => {
     try {
       const [ov, st] = await Promise.all([analyticsApi.overview(), monitorApi.status()]);
-      setOverview(ov.data.data);
-      setStatus(st.data.data);
+      setOverview(ov.data?.data ?? null);
+      setStatus(Array.isArray(st.data?.data) ? st.data.data : []);
     } catch {}
   };
 
@@ -70,7 +70,7 @@ export default function OverviewPage() {
   };
 
   const stopMonitor = async () => { await monitorApi.stop({}); load(); };
-  const running = status.find(s => s.status === "running");
+  const running = Array.isArray(status) ? status.find(s => s.status === "running") : undefined;
 
   const handleIngest = async (e: React.FormEvent) => {
     e.preventDefault();
