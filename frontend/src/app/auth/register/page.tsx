@@ -33,14 +33,17 @@ export default function RegisterPage() {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[hsl(var(--background))]">
-      <div className="w-full max-w-md p-8 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]">
+    <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4 py-8">
+      <div className="w-full max-w-md p-6 sm:p-8 rounded-lg border border-[#8B5CF6]/20 bg-[#0B1120] shadow-2xl">
         <div className="flex items-center gap-3 mb-8">
-          <Shield className="text-cyan-400 w-8 h-8" />
-          <span className="text-white font-bold text-xl">CyberShield AI</span>
+          <div className="p-2 rounded-lg brand-gradient">
+            <Shield className="text-white w-6 h-6" />
+          </div>
+          <span className="font-scotch text-white font-bold text-2xl">CyberShield AI</span>
         </div>
-        <h2 className="text-white text-2xl font-semibold mb-6">Create account</h2>
-        {error && <p className="text-red-400 text-sm mb-4 bg-red-500/10 px-3 py-2 rounded-lg">{error}</p>}
+        <h1 className="page-title mb-1">Create account</h1>
+        <p className="page-subtitle mb-6">Begin with quiet protection</p>
+        {error && <p className="text-[#FCAF45] text-sm mb-4 bg-[#E1306C]/10 border border-[#E1306C]/20 px-3 py-2 rounded-lg">{error}</p>}
         <form onSubmit={submit} className="space-y-4">
           {fields.map(f => (
             <div key={f.key}>
@@ -48,16 +51,16 @@ export default function RegisterPage() {
               <input type={f.type} value={(form as any)[f.key]}
                 onChange={e => setForm({...form, [f.key]: e.target.value})}
                 required={["name","email","password"].includes(f.key)}
-                className="w-full bg-[hsl(var(--muted))] border border-[hsl(var(--border))] text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-500" />
+                className="w-full bg-[#050816] border border-[hsl(var(--border))] text-white rounded-lg px-4 py-2.5 text-sm brand-focus" />
             </div>
           ))}
           <button type="submit" disabled={loading}
-            className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold py-2.5 rounded-lg text-sm transition-colors disabled:opacity-50">
+            className="w-full brand-button py-2.5 text-sm">
             {loading ? "Creating..." : "Create account"}
           </button>
         </form>
         <p className="text-[hsl(var(--muted-foreground))] text-sm text-center mt-6">
-          Have an account? <Link href="/auth/login" className="text-cyan-400 hover:underline">Sign in</Link>
+          Have an account? <Link href="/auth/login" className="text-[#FCAF45] hover:text-[#EC4899]">Sign in</Link>
         </p>
       </div>
     </div>

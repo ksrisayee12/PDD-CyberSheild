@@ -19,26 +19,26 @@ export default function AlertsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Alerts</h1>
-        <p className="text-[hsl(var(--muted-foreground))] text-sm mt-1">{alerts.filter(a => a.status === "unread").length} unread alerts</p>
+        <h1 className="page-title">Alerts</h1>
+        <p className="page-subtitle">{alerts.filter(a => a.status === "unread").length} unread alerts</p>
       </div>
 
       {loading ? (
-        <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-16 rounded-xl bg-[hsl(var(--card))] animate-pulse" />)}</div>
+        <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-16 rounded-lg bg-[hsl(var(--card))] animate-pulse" />)}</div>
       ) : alerts.length === 0 ? (
-        <div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-12 text-center">
+        <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-8 sm:p-12 text-center">
           <Bell className="w-10 h-10 text-[hsl(var(--muted-foreground))] mx-auto mb-3" />
           <p className="text-[hsl(var(--muted-foreground))]">No alerts yet. Start monitoring to detect threats.</p>
         </div>
       ) : (
         <div className="space-y-3">
           {alerts.map(alert => (
-            <div key={alert.id} className={`rounded-xl border bg-[hsl(var(--card))] p-4 flex items-start justify-between gap-4 transition-opacity ${alert.status === "acknowledged" ? "opacity-50" : ""} ${alert.severity === "Critical" ? "border-red-500/30" : "border-[hsl(var(--border))]"}`}>
+            <div key={alert.id} className={`rounded-lg border bg-[hsl(var(--card))] p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4 transition-opacity ${alert.status === "acknowledged" ? "opacity-50" : ""} ${alert.severity === "Critical" ? "border-[#E1306C]/35" : "border-[hsl(var(--border))]"}`}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <SeverityBadge level={alert.severity} />
                   <span className="text-xs text-[hsl(var(--muted-foreground))] capitalize">{alert.alert_type?.replace("_", " ")}</span>
-                  {alert.status === "unread" && <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />}
+                  {alert.status === "unread" && <span className="w-1.5 h-1.5 bg-[#EC4899] rounded-full" />}
                 </div>
                 <p className="text-sm text-white truncate">{alert.content_preview || "No preview"}</p>
                 <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">{new Date(alert.created_at).toLocaleString()}</p>
